@@ -8,9 +8,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Settings,
-  Layers,
-  Sliders,
-  RotateCcw,
   AlertTriangle,
   Loader2,
 } from 'lucide-react';
@@ -98,68 +95,68 @@ export default function ReaderPage() {
   const nextChapter = currentChIndex !== -1 && currentChIndex > 0 ? chapters[currentChIndex - 1] : null;
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div className="min-h-screen flex flex-col items-center px-0 sm:px-2">
       {/* Top Floating Control Bar */}
-      <div className="sticky top-2 z-30 w-full max-w-4xl px-4 mb-4">
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-neu-surface/90 backdrop-blur-md shadow-neu-flat border border-[#1e2230]">
-          <div className="flex items-center gap-3">
+      <div className="sticky top-1 sm:top-2 z-30 w-full max-w-4xl px-2 sm:px-4 mb-3 sm:mb-4">
+        <div className="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-neu-surface/95 backdrop-blur-md shadow-neu-flat border border-[#1e2230] gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => (mangaId ? router.push(`/manga/${mangaId}`) : router.push('/'))}
-              className="w-9 h-9 rounded-xl bg-neu-surface shadow-neu-btn flex items-center justify-center text-neu-muted hover:text-white"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-neu-surface shadow-neu-btn flex items-center justify-center text-neu-muted hover:text-white flex-shrink-0"
               title="Kembali"
             >
-              <ArrowLeft size={16} />
+              <ArrowLeft size={15} />
             </button>
-            <div className="truncate max-w-[200px] sm:max-w-md">
+            <div className="truncate min-w-0">
               <h4 className="text-xs font-bold text-white truncate">{decodeURIComponent(mangaTitle)}</h4>
-              <span className="text-[10px] text-neu-muted">
-                {mode === 'long-strip' ? `${pages.length} Halaman` : `Halaman ${singleIndex + 1} / ${pages.length}`}
+              <span className="text-[10px] text-neu-muted block truncate">
+                {mode === 'long-strip' ? `${pages.length} Halaman` : `Hal ${singleIndex + 1} / ${pages.length}`}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             {/* Mode Switcher */}
-            <div className="flex items-center p-1 rounded-xl bg-neu-surface shadow-neu-inset">
+            <div className="flex items-center p-0.5 sm:p-1 rounded-xl bg-neu-surface shadow-neu-inset">
               <button
                 onClick={() => setMode('long-strip')}
-                className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all ${
                   mode === 'long-strip' ? 'bg-neu-surface text-neu-accent shadow-neu-btn' : 'text-neu-muted hover:text-white'
                 }`}
               >
-                Long Strip
+                Webtoon
               </button>
               <button
                 onClick={() => setMode('single-page')}
-                className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all ${
                   mode === 'single-page' ? 'bg-neu-surface text-neu-accent shadow-neu-btn' : 'text-neu-muted hover:text-white'
                 }`}
               >
-                Single Page
+                Single
               </button>
             </div>
 
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className="w-9 h-9 rounded-xl bg-neu-surface shadow-neu-btn flex items-center justify-center text-neu-muted hover:text-white"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-neu-surface shadow-neu-btn flex items-center justify-center text-neu-muted hover:text-white"
               title="Pengaturan Reader"
             >
-              <Settings size={16} />
+              <Settings size={15} />
             </button>
           </div>
         </div>
 
         {/* Settings Drawer Panel */}
         {showSettings && (
-          <div className="mt-2 p-4 rounded-2xl bg-neu-surface shadow-neu-flat border border-[#1e2230] flex flex-wrap items-center justify-between gap-4 text-xs">
-            <div className="flex items-center gap-3">
-              <span className="text-neu-muted font-bold">Lebar Maksimal:</span>
-              <div className="flex items-center gap-1.5">
+          <div className="mt-2 p-3 sm:p-4 rounded-2xl bg-neu-surface shadow-neu-flat border border-[#1e2230] flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-start">
+              <span className="text-neu-muted font-bold text-[11px] sm:text-xs">Lebar Gambar:</span>
+              <div className="flex items-center gap-1 sm:gap-1.5">
                 {[650, 850, 1050, 1200].map((w) => (
                   <button
                     key={w}
                     onClick={() => setMaxWidth(w)}
-                    className={`px-3 py-1.5 rounded-xl font-bold ${
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${
                       maxWidth === w ? 'bg-neu-surface text-neu-accent shadow-neu-inset' : 'bg-neu-surface shadow-neu-btn text-neu-muted hover:text-white'
                     }`}
                   >
@@ -184,10 +181,10 @@ export default function ReaderPage() {
           <p className="text-sm text-neu-muted">{error}</p>
         </div>
       ) : mode === 'long-strip' ? (
-        /* LONG STRIP MODE */
-        <div className="w-full flex flex-col items-center space-y-2 pb-16" style={{ maxWidth: `${maxWidth}px` }}>
+        /* LONG STRIP MODE - Edge to Edge on Mobile */
+        <div className="w-full flex flex-col items-center space-y-1 sm:space-y-2 pb-16" style={{ maxWidth: `${maxWidth}px` }}>
           {pages.map((p) => (
-            <div key={p.index} className="w-full relative bg-[#13151f] rounded-lg overflow-hidden shadow-sm">
+            <div key={p.index} className="w-full relative bg-[#13151f] overflow-hidden">
               <img
                 src={getProxiedImageUrl(p.imageUrl)}
                 alt={`Halaman ${p.index + 1}`}
@@ -199,7 +196,7 @@ export default function ReaderPage() {
         </div>
       ) : (
         /* SINGLE PAGE MODE */
-        <div className="w-full flex flex-col items-center pb-16" style={{ maxWidth: `${maxWidth}px` }}>
+        <div className="w-full flex flex-col items-center pb-16 px-1" style={{ maxWidth: `${maxWidth}px` }}>
           {pages[singleIndex] && (
             <div className="w-full relative bg-[#13151f] rounded-2xl overflow-hidden shadow-neu-flat border border-[#1e2230]">
               <img
@@ -239,14 +236,14 @@ export default function ReaderPage() {
       )}
 
       {/* Bottom Chapter Switcher Navigation */}
-      <div className="w-full max-w-4xl px-4 pb-12 flex items-center justify-between gap-4 border-t border-[#1e2230] pt-6">
+      <div className="w-full max-w-4xl px-3 sm:px-4 pb-20 md:pb-12 flex items-center justify-between gap-3 border-t border-[#1e2230] pt-4 sm:pt-6">
         {prevChapter ? (
           <Link
             href={`/read/${prevChapter.url}?mangaId=${mangaId}&mangaTitle=${encodeURIComponent(mangaTitle)}`}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neu-surface shadow-neu-btn text-xs font-bold text-neu-text hover:text-white transition-all"
+            className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-neu-surface shadow-neu-btn text-[11px] sm:text-xs font-bold text-neu-text hover:text-white transition-all truncate"
           >
-            <ChevronLeft size={16} />
-            <span>{prevChapter.name || 'Chapter Sebelumnya'}</span>
+            <ChevronLeft size={15} />
+            <span className="truncate">{prevChapter.name || 'Prev Chapter'}</span>
           </Link>
         ) : (
           <div />
@@ -255,10 +252,10 @@ export default function ReaderPage() {
         {nextChapter ? (
           <Link
             href={`/read/${nextChapter.url}?mangaId=${mangaId}&mangaTitle=${encodeURIComponent(mangaTitle)}`}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-neu-accent text-white shadow-neu-btn text-xs font-bold hover:brightness-110 transition-all"
+            className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 rounded-xl bg-neu-accent text-white shadow-neu-btn text-[11px] sm:text-xs font-bold hover:brightness-110 transition-all truncate"
           >
-            <span>{nextChapter.name || 'Chapter Berikutnya'}</span>
-            <ChevronRight size={16} />
+            <span className="truncate">{nextChapter.name || 'Next Chapter'}</span>
+            <ChevronRight size={15} />
           </Link>
         ) : (
           <div />
